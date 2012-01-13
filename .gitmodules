@@ -1,6 +1,3 @@
-[submodule "content/js/rdf"]
-	path = content/js/rdf
-	url = git://github.com/linkeddata/rdflib.js.git
 [submodule "content"]
 	path = content
 	url = git@github.com:linkeddata/tabulator.git
