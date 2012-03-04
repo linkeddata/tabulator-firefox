@@ -22,6 +22,9 @@
 <!ENTITY tabulatorToggleHeader.label "Make Firefox request RDF">
 <!ENTITY tabulatorToggleHeader.accesskey "m">
 
+<!ENTITY tabulatorSaveSession.label "Save Sesssion">
+<!ENTITY tabulatorSaveSession.accesskey "S">
+
 <!ENTITY semclipToggleHeader.label "Image IPR Highlight">
 <!ENTITY semclipToggleHeader.accesskey "s">
 
