@@ -35,8 +35,8 @@ function Tabulator() {
     dump("@@ xpcom.js test 92  $rdf.log.error)"+this.rdf.log.error+"\n");
 
     this.kb = new tabulator.rdf.IndexedFormula();
-    this.sf = new tabulator.rdf.Fetcher(this.kb);
-    this.kb.sf = this.sf;
+    this.sf = this.fetcher = new tabulator.rdf.Fetcher(this.kb); // deprecated .sf
+    this.kb.fetcher = this.fetcher;
     this.qs = new tabulator.rdf.QuerySource();
     this.sourceWidget = new SourceWidget();
     this.sourceURI = "resource://tabulator/";
