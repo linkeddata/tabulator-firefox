@@ -11,6 +11,9 @@ status:
 	@make -C content status
 
 
+install: update
+	for i in ~/.mozilla/firefox/*/extensions/ ; do echo $$PWD > $$i/tabulator@csail.mit.edu ; done
+
 detach:
 	git checkout origin/master
 	git reset --hard HEAD
