@@ -40,7 +40,12 @@ function Tabulator() {
     this.qs = new tabulator.rdf.QuerySource();
     this.sourceWidget = new SourceWidget();
     this.sourceURI = "resource://tabulator/";
-    this.sparql = new tabulator.rdf.sparqlUpdate(this.kb);
+
+    // There must be only one of these as it coordinates upstream and downstream changes
+    this.kb.updater = new tabulator.rdf.sparqlUpdate(tabulator.kb); // Main way to find
+    this.updater = tabulator.kb.updater; // shortcuts
+    this.sparql = tabulator.kb.updater; // obsolete but still used
+
     this.rc = new RequestConnector();
     this.requestCache = [];
     this.cacheEntry = {};
