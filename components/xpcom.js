@@ -19,7 +19,7 @@ function setTimeout(cb, delay) {
         notify: function () {
             cb();
         }
-    }; 
+    };
     timer.initWithCallback(timerCallback,delay,timer.TYPE_ONE_SHOT);
 }
 
@@ -27,12 +27,13 @@ function setTimeout(cb, delay) {
 function Tabulator() {
     tabulator = this;
     this.wrappedJSObject = this;
-    
+
     //Include pretty much all of the javascript needed for the extension:
     var loader = Components.classes["@mozilla.org/moz/jssubscript-loader;1"]
                        .getService(Components.interfaces.mozIJSSubScriptLoader);
     loader.loadSubScript("chrome://tabulator/content/js/init/init.js");
-    dump("@@ xpcom.js test 92  $rdf.log.error)"+this.rdf.log.error+"\n");
+    dump("xpcom.js: init.js load finished.\n");
+
 
     this.kb = new tabulator.rdf.IndexedFormula();
     this.sf = this.fetcher = new tabulator.rdf.Fetcher(this.kb); // deprecated .sf
@@ -42,7 +43,7 @@ function Tabulator() {
     this.sourceURI = "resource://tabulator/";
 
     // There must be only one of these as it coordinates upstream and downstream changes
-    this.kb.updater = new tabulator.rdf.sparqlUpdate(tabulator.kb); // Main way to find
+    this.kb.updater = new tabulator.rdf.UpdateManager(tabulator.kb); // Main way to find
     this.updater = tabulator.kb.updater; // shortcuts
     this.sparql = tabulator.kb.updater; // obsolete but still used
 
@@ -52,7 +53,7 @@ function Tabulator() {
     this.getOutlinerHTML = function (displayURI, partial) {
         var result = "<head><title>Tabulator: Data browser</title><link rel=\"stylesheet\" href=\"chrome://tabulator/content/tabbedtab.css\" type=\"text/css\" /></head><body><div class=\"TabulatorOutline\" id=\""+displayURI+"\"><table id=\"outline\"></table></div></body>"
         //"</html>";
-        return result;    
+        return result;
     }
 
     this.sourceWidget.addSource(tabulator.sourceURI);
@@ -71,7 +72,6 @@ function Tabulator() {
     this.lb = new Labeler(this.kb,LanguagePreference);
     this.kb.predicateCallback = tabulator.rdf.Util.AJAR_handleNewTerm;
     this.kb.typeCallback = tabulator.rdf.Util.AJAR_handleNewTerm;
-    dump("@@ xpcom.js test 94  $rdf.log.error)"+this.rdf.log.error+"\n");
 
 }//Tabulator
 
@@ -85,7 +85,7 @@ Tabulator.prototype = {
     },
     classID: CLASS_ID
 };
-    
+
 // Firefox 3 Module
 var TabulatorFactory = {
     singleton: null,
@@ -103,24 +103,24 @@ var TabulatorModule = {
         aCompMgr = aCompMgr.QueryInterface(Components.interfaces.nsIComponentRegistrar);
         aCompMgr.registerFactoryLocation(CLASS_ID, CLASS_NAME, CONTRACT_ID, aFileSpec, aLocation, aType);
     },
-    
+
     unregisterSelf: function(aCompMgr, aLocation, aType)
     {
         aCompMgr = aCompMgr.QueryInterface(Components.interfaces.nsIComponentRegistrar);
-        aCompMgr.unregisterFactoryLocation(CLASS_ID, aLocation);        
+        aCompMgr.unregisterFactoryLocation(CLASS_ID, aLocation);
     },
-    
+
     getClassObject: function(aCompMgr, aCID, aIID)
     {
         if (!aIID.equals(Components.interfaces.nsIFactory))
             throw Components.results.NS_ERROR_NOT_IMPLEMENTED;
-        
+
         if (aCID.equals(CLASS_ID))
             return TabulatorFactory;
-        
+
         throw Components.results.NS_ERROR_NO_INTERFACE;
     },
-    
+
     canUnload: function(aCompMgr) { return true; }
 };
 function NSGetModule(aCompMgr, aFileSpec) { return TabulatorModule; }

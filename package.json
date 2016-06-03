@@ -1,0 +1,15 @@
+{
+  "title": "The Tabulator data browser - Firefox Addon",
+  "name": "tabulator",
+  "version": "0.4.1",
+  "description": "UNUSED PACKAGE FILE AT THE MOMENT A linked data browser with many different views",
+  "main": "content/js/init/init.js",
+  "author": "Tim Berners-Lee et al",
+  "engines": {
+    "firefox": ">=38.0a1"
+  },
+  "license": "MIT",
+  "keywords": [
+    "jetpack"
+  ]
+}
